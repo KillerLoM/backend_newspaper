@@ -1,6 +1,7 @@
 package com.example.backend.MenuBar;
 import com.example.backend.DataBaseService.DbFunction;
-
+import com.example.backend.Newspapers.category;
+import jdk.jfr.Category;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,33 +17,38 @@ import java.util.LinkedList;
 public class GetCategory {
     public static void getCategory() throws IOException, SQLException {
         DbFunction db = new DbFunction();
-        Connection conn = db.connect_to_db("New_Db","postgres","123456789");
+        Connection conn = db.connect_to_db("Db_Server","postgres","123456789");
         String src ="https://tuoitre.vn/";
         Document webPage = Jsoup.connect(src).get();
         Elements categories = webPage.select("div.header__nav div.container div.header__nav-flex ul.menu-nav li");
         for(Element category: categories) {
             String title = category.select("a").attr("title");
-            db.insert_category(conn,"data_categories",title);
+            db.insert_category(conn,"table_category",title);
         }
         conn.close();
     }
-    public static LinkedList getMenuBar(){
+    public static LinkedList<category> getMenuBar() {
         DbFunction db = new DbFunction();
-        Connection conn = db.connect_to_db("New_Db","postgres","123456789");
-        LinkedList linkedList = new LinkedList();
-        Statement statement ;
+        Connection conn = db.connect_to_db("Db_Server", "postgres", "123456789");
+        LinkedList<category> linkedList = new LinkedList<>();
+        Statement statement;
         ResultSet rs = null;
-        try{
-            String query = String.format("select * from data_categories");
+        try {
+            String query = String.format("select * from table_category");
             statement = conn.createStatement();
+            category Category = new category();
             rs = statement.executeQuery(query);
-            while(rs.next()){
-                linkedList.add(rs.getString("category"));
+            while (rs.next()) {
+                Category = category.build(
+                        rs.getInt("id"),
+                        rs.getString("category")
+                );
+                linkedList.add(Category);
             }
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.out.println(e);
         }
         return linkedList;
     }
-
 }

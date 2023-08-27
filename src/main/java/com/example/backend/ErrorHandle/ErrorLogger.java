@@ -15,7 +15,7 @@ public class ErrorLogger {
         String dateTime = dateFormat.format(date);
 
         // Create a file to write the error log to
-        String fileName = "error_log_" + dateTime + ".txt";
+        String fileName = "log/error_log_" + dateTime + ".txt";
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(fileName);

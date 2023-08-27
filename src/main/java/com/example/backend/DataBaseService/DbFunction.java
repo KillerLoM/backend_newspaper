@@ -1,6 +1,7 @@
 package com.example.backend.DataBaseService;
 import com.example.backend.ErrorHandle.ErrorLogger;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -12,7 +13,7 @@ public class DbFunction {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"+dbName, user, pwd);
             if(conn!=null){
-                System.out.println("Connection to Database Established");
+//                System.out.println("Connection to Database Established");
             }
             else System.out.println("Connection Failed");
         }catch (Exception e) {
@@ -23,7 +24,7 @@ public class DbFunction {
     public void createTable(Connection conn, String table_name){
         Statement statement;
         try{
-            String query = "create table " + table_name + "(code varchar(100), category varchar(200), link text,heading text, description text, img text, day int, month int, year int,hour int, minute int, second int,  primary key(code, category));";
+            String query = "create table " + table_name + "(code varchar(100), category varchar(200), link text,heading text, description text, img text, day int, month int, year int,hour int, minute int, second int, created_at timestamp,  primary key(code, category));";
             statement = conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Table Created");
@@ -57,7 +58,7 @@ public class DbFunction {
                 statement.executeUpdate();
                 System.out.println("Row Inserted");
             } else {
-                System.out.println("This newspaper has been already inserted");
+
             }
         } catch (Exception e) {
             ErrorLogger.logError(e);
@@ -95,17 +96,16 @@ public class DbFunction {
                 statement1.executeUpdate();
                 System.out.println("Row Inserted");
             } else {
-                System.out.println("This category has been already inserted");
             }
         } catch (Exception e) {
             ErrorLogger.logError(e);
         }
     }
-    public void insert_link(Connection conn, String table_name, String code, String category, String link,String heading, String description, String img, int day, int month, int year, int hour, int minute, int second){
+    public void insert_link(Connection conn, String table_name, String code, String category, String link,String heading, String description, String img, int day, int month, int year, int hour, int minute, int second, Timestamp created_at){
         PreparedStatement statement = null;
         try {
             if (check_by_id(conn, table_name, code)) {
-                String query = "INSERT INTO " + table_name + "(code, category,link,heading, description, img, day, month, year, hour, minute, second) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String query = "INSERT INTO " + table_name + "(code, category,link,heading, description, img, day, month, year, hour, minute, second, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 statement = conn.prepareStatement(query);
                 statement.setString(1, code);
                 statement.setString(2, category);
@@ -119,10 +119,11 @@ public class DbFunction {
                 statement.setInt(10, hour);
                 statement.setInt(11, minute);
                 statement.setInt(12, second);
+                statement.setTimestamp(13, created_at);
                 statement.executeUpdate();
                 System.out.println("Row Inserted");
             } else {
-                System.out.println("This newspaper has been already inserted");
+
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -165,16 +166,27 @@ public class DbFunction {
 //        }
 //        return table_name;
 //    }
-//    public void createTableCategory(Connection conn, String table_name){
-//        Statement statement;
-//        try{
-//            String query = "create table " + table_name + "(category varchar(200), primary key (category));";
-//            statement = conn.createStatement();
-//            statement.executeUpdate(query);
-//            System.out.println("Table Created");
-//        }catch(Exception e){
-//            System.out.println(e);
-//        }
-//    }
-
+public void createTableCategory(Connection conn, String table_name) {
+    Statement statement;
+    try {
+        String query = "create table " + table_name + "(id serial primary key, category varchar(200));";
+        statement = conn.createStatement();
+        statement.executeUpdate(query);
+        System.out.println("Table Created");
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+}
+    public void delete_row_by_code(Connection conn, String table_name, String code){
+        Statement statement;
+        try{
+            String query = String.format("delete from %s where code = '%s'", table_name,code);
+            statement = conn.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("This newspaper can not be handle so it has to be deleted");
+        }
+        catch(Exception e){
+            ErrorLogger.logError(e);
+        }
+    }
 }
