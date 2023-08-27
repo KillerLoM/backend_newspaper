@@ -11,7 +11,7 @@ Fourthly: You need to create database with the name is Db_Server and click right
 
 Finally. After restore data file. You open it and if you see three tables data. You have set up succesfull and open the project from your ideas and run project.
 
-After you have successfully enabled. Let's go to the frontend project and enjoy. 
+After you have successfully enabled. Let's go to the frontend project and enjoy. Link frontend project:  https://github.com/KillerLoM/frontend_newspapers
 
 
 If you have any problems about the start database. You can see the guide on this video: https://www.youtube.com/watch?v=3AKIA8pu8YY
