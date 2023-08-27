@@ -1,7 +1,7 @@
 # backend_newspaper
 In order to run the backend file you need to install IDdea such as Jetbrains Intelliji Idea 
 
-Firtsly: You need to install sever database as Postgresql
+Firtsly: You need to install sever database as Postgresql. And after that you need to install project and data. File data I put it into Data folder. You just to install that file.
 
 Secondly: You need to run the database application as pgAdmin4
 
