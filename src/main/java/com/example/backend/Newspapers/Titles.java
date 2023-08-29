@@ -2,6 +2,7 @@ package com.example.backend.Newspapers;
 
 public class Titles {
     private String category;
+    private String code;
     private String time;
     private String heading;
     private String subHeading;
@@ -43,16 +44,26 @@ public class Titles {
         return content;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
     public static Titles build(
+            String code,
             String category,
             String time,
             String heading,
             String subHeading,
             String content){
         Titles item = new Titles();
+        item.code = code;
         item.category = category;
         item.time = time;
         item.heading = heading;

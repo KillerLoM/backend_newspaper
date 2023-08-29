@@ -13,7 +13,7 @@ public class DbFunction {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"+dbName, user, pwd);
             if(conn!=null){
-//                System.out.println("Connection to Database Established");
+                System.out.println("Connection to Database Established");
             }
             else System.out.println("Connection Failed");
         }catch (Exception e) {
@@ -41,12 +41,13 @@ public class DbFunction {
             System.out.println("Table Created");
         }catch (Exception e) {
             ErrorLogger.logError(e);
+            System.out.println(e);
         }
     }
     public void insertNewspapers(Connection conn, String table_name, String code, String time, String category, String heading, String subHeading, String content){
         PreparedStatement statement = null;
         try {
-            if (check_by_id(conn, table_name, code)) {
+
                 String query = "INSERT INTO " + table_name + "(code, category,time,heading, subHeading,content) VALUES (?, ?, ?, ?, ?, ?)";
                 statement = conn.prepareStatement(query);
                 statement.setString(1, code);
@@ -57,9 +58,6 @@ public class DbFunction {
                 statement.setString(6, content);
                 statement.executeUpdate();
                 System.out.println("Row Inserted");
-            } else {
-
-            }
         } catch (Exception e) {
             ErrorLogger.logError(e);
         } finally {

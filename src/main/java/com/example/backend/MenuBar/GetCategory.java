@@ -15,9 +15,9 @@ import java.sql.Statement;
 import java.util.LinkedList;
 
 public class GetCategory {
-    public static void getCategory() throws IOException, SQLException {
-        DbFunction db = new DbFunction();
-        Connection conn = db.connect_to_db("Db_Server","postgres","123456789");
+
+    public static void getCategory(Connection conn, DbFunction db) throws IOException, SQLException {
+
         String src ="https://tuoitre.vn/";
         Document webPage = Jsoup.connect(src).get();
         Elements categories = webPage.select("div.header__nav div.container div.header__nav-flex ul.menu-nav li");
@@ -25,11 +25,8 @@ public class GetCategory {
             String title = category.select("a").attr("title");
             db.insert_category(conn,"table_category",title);
         }
-        conn.close();
     }
-    public static LinkedList<category> getMenuBar() {
-        DbFunction db = new DbFunction();
-        Connection conn = db.connect_to_db("Db_Server", "postgres", "123456789");
+    public static LinkedList<category> getMenuBar(Connection conn, DbFunction db) {
         LinkedList<category> linkedList = new LinkedList<>();
         Statement statement;
         ResultSet rs = null;

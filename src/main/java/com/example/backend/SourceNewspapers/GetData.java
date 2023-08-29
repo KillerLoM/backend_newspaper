@@ -28,9 +28,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GetData {
+    public static String data(Connection conn, DbFunction db) throws IOException, ParseException, SQLException {
 
-    public static String data() throws IOException, ParseException, SQLException {
-//        String HTMLCode ="";
+
+        String HTMLCode ="";
         LinkedList<String>linkedList = new LinkedList<>();
         Document document = Jsoup.connect("https://tuoitre.vn/tin-moi-nhat.htm").get();
         Elements nodeElement = document.select("div.box-category-item");
@@ -62,21 +63,19 @@ public class GetData {
             int minute = zonedDateTime.getMinute();
             int second = zonedDateTime.getSecond();
 //            System.out.println(code + "\n" + heading +"\n" + description +"\n" + image +"\n" + day +"/" +month +"/" + year +"\n" + href  +"\n" + type );
-            DbFunction db = new DbFunction();
-            Connection conn = db.connect_to_db("Db_Server", "postgres", "123456789");
+
             ZonedDateTime zonedDateTime1 = ZonedDateTime.of(year, month, day, hour, minute, second, 0, ZoneId.of("UTC"));
             Timestamp timestamp = Timestamp.from(zonedDateTime.toInstant());
             db.insert_link(conn,"table_links",code,type,href,heading,description,img,day,month,year,hour,minute,second,timestamp);
-            conn.close();
+
         }
 
         return nodeElement.toString();
+
     }
-    public static Titles newspaper(String code){
+    public static Titles newspaper(String code, Connection conn, DbFunction db){
         Titles titles = new Titles() ;
         LinkedList <Titles> linkedList = new LinkedList<>();
-        DbFunction db = new DbFunction();
-        Connection conn = db.connect_to_db("Db_Server", "postgres", "123456789");
         Statement statement;
         ResultSet rs = null;
         try{
@@ -85,6 +84,7 @@ public class GetData {
             rs = statement.executeQuery(query);
             if(rs.next()){
                  titles = Titles.build(
+                         rs.getString("code"),
                         rs.getString("category"),
                         rs.getString("time"),
                         rs.getString("heading"),
