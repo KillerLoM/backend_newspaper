@@ -49,7 +49,7 @@ public class MainController {
         }
         }
     @GetMapping(value = "/{category}", produces = "application/json")
-    @Operation(summary = "API giúp bạn lọc các báo tuoitre.vn theo danh mục mới nhất")
+    @Operation(summary = "API help the user chose the category that they like")
     public static NewspaperResponse getNewspapersByUser(@PathVariable("category")String category,
                                                         @RequestParam(required = false, name = "page", defaultValue = "0") Integer page,
                                                         @RequestParam(required = false, name = "size", defaultValue = "1") Integer size) throws IOException, SQLException
@@ -58,7 +58,7 @@ public class MainController {
     }
 
     @RequestMapping(value ="/newspaper/{code}", method = RequestMethod.GET, produces = "application/json")
-    @Operation(summary = "Get the details about newspaper as code")
+    @Operation(summary = "Get the details about newspaper with code")
     public static Titles data1(@PathVariable("code")String code) throws IOException{
         return GetData.newspaper(code, conn, db);
     }
