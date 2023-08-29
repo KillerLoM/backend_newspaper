@@ -8,5 +8,11 @@ In order to run the backend file you need to install IDdea such as Jetbrains Int
 - Thirdly: You will create the database sever. Note: You have to set the port is 5432, name is postgres and password is 123456789 because i have setted up the configuration of sever
 - Fourthly: You need to create database with the name is Db_Server and click right on mouse and click restore. After that you need to chose the file data that you have installed
 - Finally. After restore data file. You open it and if you see three tables data. You have set up succesfull and open the project from your ideas and run project.
+# View document about project
+You can see document about project by path: http://localhost:8888/swagger-ui/index.html
+- On that link, you can know how to api return the data to you
+- You also can know how to use the api and build it from the swagger document
 # Run project frontend
 After you have successfully enabled. Let's go to the frontend project and enjoy. Link frontend project: [frontend_newspapers-main](https://github.com/KillerLoM/frontend_newspapers-main)
+
+
