@@ -9,4 +9,4 @@ In order to run the backend file you need to install IDdea such as Jetbrains Int
 - Fourthly: You need to create database with the name is Db_Server and click right on mouse and click restore. After that you need to chose the file data that you have installed
 - Finally. After restore data file. You open it and if you see three tables data. You have set up succesfull and open the project from your ideas and run project.
 # Run project frontend
-After you have successfully enabled. Let's go to the frontend project and enjoy. Link frontend project: https://github.com/KillerLoM/frontend_newspapers-main.git
+After you have successfully enabled. Let's go to the frontend project and enjoy. Link frontend project: [https://github.com/KillerLoM/frontend_newspapers-main.git](https://github.com/KillerLoM/frontend_newspapers-main.git)https://github.com/KillerLoM/frontend_newspapers-main.git
